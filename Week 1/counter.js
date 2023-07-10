@@ -4,8 +4,6 @@ function counterAdd()
     console.clear();
     counter += 1;
     console.log(counter);
-    setTimeout( counterAdd, 1000);
-
 }
 
-counterAdd();
+setInterval( counterAdd, 1000);
