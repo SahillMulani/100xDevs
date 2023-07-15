@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
+var bodyParser = require('body-parser')
 const port = 3000
+
+
+app.use(bodyParser.json())
 
 function calculateSum(counter)
 {   
@@ -16,14 +20,19 @@ function calculateSum(counter)
 
 function handleFirstReq(req, res)
 {
-    // Via Header
-    console.log(req.headers);
-    // Via Query Parameter
-   // var counter = req.query.counter;
-   var counter = req.headers.counter;
-  
+   console.log(req.body);
+   var counter = req.body.counter;
+   
+   if( counter < 1000)
+   {
     var calculatedSum = calculateSum(counter);
     res.send('The sum is '+ calculatedSum)
+   }
+   else
+   {
+    res.status(411).send("You have entered a very big number");
+   }
+   
 }
 
 // app.get('/handleSum', handleFirstReq)

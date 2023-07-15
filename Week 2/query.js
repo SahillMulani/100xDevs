@@ -17,17 +17,19 @@ function calculateSum(counter)
 function handleFirstReq(req, res)
 {
     // Via Header
-    console.log(req.headers);
     // Via Query Parameter
-   // var counter = req.query.counter;
-   var counter = req.headers.counter;
+   var counter = req.query.counter;
+  // var counter = req.headers.counter;
   
     var calculatedSum = calculateSum(counter);
-    res.send('The sum is '+ calculatedSum)
+    var answer = {
+        sum : calculatedSum
+    }
+    res.send(answer);
 }
 
-// app.get('/handleSum', handleFirstReq)
-app.post('/handleSum', handleFirstReq)
+app.get('/handleSum', handleFirstReq)
+// app.post('/handleSum', handleFirstReq)
 
 function started()
 {

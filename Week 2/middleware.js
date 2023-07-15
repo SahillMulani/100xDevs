@@ -2,6 +2,15 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+function middleware(req, res, next)
+{
+    console.log("from inside "+ req.headers.counter);
+    res.send("Error from inside the middleware");
+//    next(); // after this function is called the request will go to the function
+}
+
+app.use(middleware);
+
 function calculateSum(counter)
 {   
     var sum = 0;

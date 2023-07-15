@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
+var bodyParser = require('body-parser')
 const port = 3000
+
+
+app.use(bodyParser.json())
 
 function calculateSum(counter)
 {   
@@ -13,17 +17,29 @@ function calculateSum(counter)
     return sum;
 
 }
+function calculateMul(counter)
+{   
+    var sum = 1;
+    for(var i = 1; i < counter ; i++)
+    {
+        sum *= i;
+    }
 
+    return sum;
+
+}
 function handleFirstReq(req, res)
 {
-    // Via Header
-    console.log(req.headers);
-    // Via Query Parameter
-   // var counter = req.query.counter;
-   var counter = req.headers.counter;
-  
+   console.log(req.body);
+   var counter = req.body.counter;
+   
+    var calulcatedMul = calculateMul(counter);
     var calculatedSum = calculateSum(counter);
-    res.send('The sum is '+ calculatedSum)
+    var answerObject = {
+        sum : calculatedSum,
+        mul : calulcatedMul
+    }
+    res.status(200).send(answerObject);
 }
 
 // app.get('/handleSum', handleFirstReq)
@@ -35,6 +51,4 @@ function started()
 }
 
 app.listen(port, started)
-
-
 
