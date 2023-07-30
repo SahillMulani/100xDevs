@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO APP</title>
+</head>
+<script>
+    function deleteTodo(id)
+    {
+      console.log(id)
+    }
+    function todosCallback(data)
+    {
+      console.log(data);
+      var parentEle = document.getElementById("mainArea");
+      for(var i = 0; i < data.length; i++)
+      {
+        var childEle = document.createElement("div");
+
+        var grandEle1 = document.createElement("span");
+        grandEle1.innerHTML = data[i].title;
+
+        var grandEle2 = document.createElement("span");
+        grandEle2.innerHTML = data[i].description;
+
+        var grandEle3 = document.createElement("button");
+        grandEle3.innerHTML = "Delete";
+        grandEle3.setAttribute("onclick","deleteTodo(" + data[i].id +")")
+
+
+        childEle.append(grandEle1);
+        childEle.append(grandEle2);
+        childEle.append(grandEle3);
+
+        parentEle.appendChild(childEle);
+      }
+    }
+    function callBack2(res) 
+    {
+      res.json().then(todosCallback);
+    }
+    function getData()
+    {
+        fetch("http://localhost:3000/todos",{
+          method: "GET",
+        }).then(callBack2)
+    }
+    function parsedJson(data)
+    {
+        console.log(data);
+    
+    }
+    function callBack(res)
+    {
+        res.json().then(parsedJson)
+    }
+    function submit()
+    {
+      var title = document.getElementById("title").value;
+      var description = document.getElementById('description').value;
+      console.log(title);
+        fetch("http://localhost:3000/todo", 
+            { method : "POST" ,
+              body : JSON.stringify({
+                title : title ,
+                description : description
+              }),
+              headers : {
+                "Content-Type" : "application/json"
+              } 
+            }).then(callBack)
+
+    }
+</script>
+<body>
+    Todo title
+    <input type="text" id="title" placeholder="tile">
+    Todo description
+    <input type="text" id="description" placeholder="description">
+    <button onclick= "submit()"> Submit </button>
+    <button onclick= "getData()"> GetData </button>
+    <div id ="mainArea">
+
+    </div>
+</body>
+</html>

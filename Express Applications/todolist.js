@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path')
 const app = express()
 const port = 3000
 
@@ -19,9 +20,7 @@ let findIndex = (arr, id) => {
 
 let todo = [];
 
-app.get('/', (req, res) => {
-  res.json(todo);
-})
+
 
 app.get('/:id', (req, res) => {
     var id = findIndex(todo, parseInt(req.params.id))
@@ -54,6 +53,10 @@ app.put('/todo/:id', (req, res) =>
 
     res.json(todo[id]);
 
+})
+
+app.get("/", (req,res) =>{
+    res.sendFile(path.join(__dirname,"index.html"));
 })
 
 app.listen(port, () => {

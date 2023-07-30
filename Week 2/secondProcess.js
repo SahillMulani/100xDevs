@@ -9,4 +9,4 @@ function callback(result)
 }
 
 fetch("http://localhost:3000/handleSum?counter=100" , {
-    method : "GET"}).then(callback)-
+    method : "GET"}).then(callback);
